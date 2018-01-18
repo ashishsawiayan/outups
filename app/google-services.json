@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "789668209222",
+    "firebase_url": "https://outups.firebaseio.com",
+    "project_id": "outups",
+    "storage_bucket": "outups.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789668209222:android:b7820c06dcfe05e4",
+        "android_client_info": {
+          "package_name": "com.ashish.outups"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789668209222-gs020qbs6kq26iqa6mbe8rkja9o8q6va.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI8dB0AUy9HxpV-oo6DJJKZbJYvlLsnOw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
