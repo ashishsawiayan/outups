@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Outups</string>
+    <string name="facebook_app_id">1486329858152457</string>
+    <string name="fb_login_protocol_scheme">fb1486329858152457</string>
 </resources>
