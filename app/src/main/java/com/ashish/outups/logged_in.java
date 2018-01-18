@@ -23,7 +23,7 @@ public class logged_in extends AppCompatActivity {
         setContentView(R.layout.activity_logged_in2);
         flogout=(Button)findViewById(R.id.logout);
         firebaseAuth=FirebaseAuth.getInstance();
-       getWindow().setStatusBarColor(Color.WHITE);
+       //getWindow().setStatusBarColor(Color.BLUE);
 
         flogout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         login=(Button)findViewById(R.id.button);
         create=(TextView)findViewById(R.id.textView7);
         firebaseAuth=FirebaseAuth.getInstance();
-        progressDialog=new ProgressDialog(this);
+       progressDialog=new ProgressDialog(this);
         FirebaseUser user=firebaseAuth.getCurrentUser();
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
@@ -86,7 +86,13 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validate(email.getText().toString(),pass.getText().toString());
+                String uemail= email.getText().toString();
+                String upass= pass.getText().toString();
+                if(uemail.isEmpty()||upass.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "please enter all the details", Toast.LENGTH_SHORT).show();
+                }
+                else
+                validate(uemail,upass);
             }
         });
 
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI() {
         Toast.makeText(MainActivity.this, "you are logged in", Toast.LENGTH_LONG).show();
         startActivity(new Intent(MainActivity.this,logged_in.class));
+        progressDialog.dismiss();
         finish();
 
     }
@@ -129,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
     private void handleFacebookAccessToken(AccessToken token) {
+        progressDialog.setMessage("verifying");
+        progressDialog.show();
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -168,7 +177,8 @@ firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new O
         }
         else {
             progressDialog.dismiss();
-            Toast.makeText(MainActivity.this, "login failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "login failed ", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Please enter the correct details ", Toast.LENGTH_LONG).show();
         }
     }
 });
