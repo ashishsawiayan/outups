@@ -18,6 +18,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -27,13 +28,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class registration extends AppCompatActivity {
-    private EditText name,email,pass;
+    private EditText name,email,pass,role,location;
     private Button signup;
     private TextView userlogin;
     private CallbackManager mCallbackManager;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private static final String TAG="FACELOG";
+    public Firebase mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +44,26 @@ public class registration extends AppCompatActivity {
         setupUIViews();
         firebaseAuth=FirebaseAuth.getInstance();
         progressDialog=new ProgressDialog(this);
+        //Firebase.setAndroidContext(this);
+
+
+
+
+        mRef=new Firebase("https://outups.firebaseio.com/");
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validate())
                 {
                     //upload to the database
-                    String user_email=email.getText().toString();
-                    String user_password=pass.getText().toString();
+                  final String user_name=name.getText().toString();
+                    final String user_email=email.getText().toString();
+                    final String user_role=role.getText().toString();
+                    final String user_location=location.getText().toString();
+                    final String user_password=pass.getText().toString();
+
+
+
 
                     firebaseAuth.createUserWithEmailAndPassword(user_email,user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -57,8 +71,25 @@ public class registration extends AppCompatActivity {
                             if (task.isComplete()) {
                                 Toast.makeText(registration.this, "Registration sucessful", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(registration.this,MainActivity.class));
+
+                                 Firebase mRefChild=mRef.child("User");
+                                // mRefChild=new Firebase("https://outups.firebaseio.com/User");
+                                Firebase key=mRefChild.child(firebaseAuth.getUid().toString());
+                                // Firebase mRefChild1=mRefChild.child("uid");
+                                 Firebase mRefChild2=key.child("name");
+                                 Firebase mRefChild3=key.child("email");
+                                Firebase mRefChild4=key.child("role");
+                                Firebase mRefChild5=key.child("location");
+
+                                //key.setValue();
+                                mRefChild2.setValue(user_name);
+                                mRefChild3.setValue(user_email);
+                                mRefChild4.setValue(user_role);
+                                mRefChild5.setValue(user_location);
+
+
                             } else {
-                                Toast.makeText(registration.this, "Registration sucessful", Toast.LENGTH_LONG).show();
+                                Toast.makeText(registration.this, "Registration failed", Toast.LENGTH_LONG).show();
                             }
                         }
                         });
@@ -105,15 +136,19 @@ public class registration extends AppCompatActivity {
         pass=(EditText)findViewById(R.id.editText5);
         signup=(Button) findViewById(R.id.button2);
         userlogin=(TextView)findViewById(R.id.textView6);
+        location=(EditText) findViewById(R.id.editText7);
+        role=(EditText)findViewById(R.id.editText6);
     }
     private boolean validate(){
         boolean result=false;
         String uname= name.getText().toString();
         String uemail= email.getText().toString();
         String upass= pass.getText().toString();
+        String urole=role.getText().toString();
+        String ulocation=location.getText().toString();
 
 
-        if(uname.isEmpty()&&uemail.isEmpty()&&upass.isEmpty()) {
+        if(uname.isEmpty()&&uemail.isEmpty()&&upass.isEmpty()&&urole.isEmpty()&&ulocation.isEmpty()) {
             Toast.makeText(this, "please enter all the details", Toast.LENGTH_SHORT).show();
         }
         else

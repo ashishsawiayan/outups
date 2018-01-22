@@ -19,6 +19,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText pass;
     private TextView create;
     private Button login;
+    //private Firebase mRef;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private CallbackManager mCallbackManager;
@@ -47,8 +49,13 @@ public class MainActivity extends AppCompatActivity {
         pass=(EditText)findViewById(R.id.editText4);
         login=(Button)findViewById(R.id.button);
         create=(TextView)findViewById(R.id.textView7);
+        //Firebase.setAndroidContext(this);
+
+
+
         firebaseAuth=FirebaseAuth.getInstance();
        progressDialog=new ProgressDialog(this);
+
         FirebaseUser user=firebaseAuth.getCurrentUser();
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
